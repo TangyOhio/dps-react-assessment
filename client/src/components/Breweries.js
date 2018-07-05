@@ -3,32 +3,35 @@ import axios from 'axios'
 import { Header, Segment, Divider, Grid, Card } from 'semantic-ui-react'
 
 
-class Beers extends React.Component {
-  state = { beers: [] }
+class Breweries extends React.Component {
+  state = { breweries: [] }
 
   componentDidMount() {
-    axios.get('/api/all_beers')
-      .then( res => {
+    axios.get('/api/all_breweries')
+      .then(res => {
         console.log(res.data.entries)
-        this.setState({ beers: res.data.entries })
-      }).catch( err => {
+        this.setState({ breweries: res.data.entries })
+      }).catch(err => {
         console.log(err)
-    })
+      })
   }
 
-  displayBeer = () => {
-    const { beers } = this.state
-    return beers.map( beer => {
-      return(
-        <Card key={beer.id} color="brown">
+  displayBrewery = () => {
+    const { breweries } = this.state
+    return breweries.map(brewery => {
+      return (
+        <Card key={brewery.id} color="brown">
           <Card.Content>
             <Card.Header>
-                {beer.name}
+              {brewery.name}
             </Card.Header>
 
             <Card.Description>
-              {beer.description}
+              {brewery.description}
             </Card.Description>
+            <a href={brewery.website}>
+              <p>Website</p>
+            </a>
           </Card.Content>
         </Card>
       )
@@ -36,11 +39,11 @@ class Beers extends React.Component {
   }
 
   render() {
-    
-    return(
+
+    return (
       <Segment basic>
         <Segment basic textAlign='center'>
-          <Header as='h1' style={styles.header}>Some Beer My Dudes</Header>
+          <Header as='h1' style={styles.header}>And Then The Breweries</Header>
         </Segment>
         <Grid>
           <Grid.Column computer={16} tablet={16} mobile={16}>
@@ -49,11 +52,11 @@ class Beers extends React.Component {
                 as='h1'
                 textAlign='center'
                 style={styles.header}>
-                Beer:
+                Breweries:
               </Header>
               <Divider />
               <Card.Group stackable itemsPerRow={3}>
-                {this.displayBeer()}
+                {this.displayBrewery()}
               </Card.Group>
             </Segment>
           </Grid.Column>
@@ -72,4 +75,4 @@ const styles = {
   }
 }
 
-export default Beers
+export default Breweries
