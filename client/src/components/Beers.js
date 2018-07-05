@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { Header, Segment, Divider, Grid, Card } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 
 class Beers extends React.Component {
@@ -9,7 +10,6 @@ class Beers extends React.Component {
   componentDidMount() {
     axios.get('/api/all_beers', { params: { per_page: 10, page: 1 }})
       .then( res => {
-        console.log(res.data.entries)
         this.setState({ beers: res.data.entries })
       }).catch( err => {
         console.log(err)
@@ -23,7 +23,9 @@ class Beers extends React.Component {
         <Card key={beer.id} color="brown">
           <Card.Content>
             <Card.Header>
+              <Link to={`/beer/${beer.name}`}>
                 {beer.name}
+              </Link>
             </Card.Header>
 
             <Card.Description>
@@ -40,9 +42,6 @@ class Beers extends React.Component {
     return(
       <div>
         <Segment basic>
-          <Segment basic textAlign='center'>
-            <Header as='h1' style={styles.header}>Some Beer My Dudes</Header>
-          </Segment>
           <Grid>
             <Grid.Column computer={16} tablet={16} mobile={16}>
               <Segment inverted>
@@ -50,7 +49,7 @@ class Beers extends React.Component {
                   as='h1'
                   textAlign='center'
                   style={styles.header}>
-                  Beer:
+                  Some Beer My Dudes
                 </Header>
                 <Divider />
                 <Card.Group stackable itemsPerRow={3}>

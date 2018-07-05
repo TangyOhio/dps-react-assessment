@@ -1,15 +1,14 @@
 import React from 'react'
 import axios from 'axios'
 import { Header, Segment, Divider, Grid, Card } from 'semantic-ui-react'
-
+import { Link } from 'react-router-dom'
 
 class Breweries extends React.Component {
   state = { breweries: [] }
 
   componentDidMount() {
-    axios.get('/api/all_breweries')
+    axios.get('/api/all_breweries', { params: { per_page: 10, page: 1 } })
       .then(res => {
-        console.log(res.data.entries)
         this.setState({ breweries: res.data.entries })
       }).catch(err => {
         console.log(err)
@@ -23,7 +22,9 @@ class Breweries extends React.Component {
         <Card key={brewery.id} color="brown">
           <Card.Content>
             <Card.Header>
-              {brewery.name}
+              <Link to={`/brewery/${brewery.name}`}>
+                {brewery.name}
+              </Link>
             </Card.Header>
 
             <Card.Description>
@@ -42,9 +43,6 @@ class Breweries extends React.Component {
 
     return (
       <Segment basic>
-        <Segment basic textAlign='center'>
-          <Header as='h1' style={styles.header}>And Then The Breweries</Header>
-        </Segment>
         <Grid>
           <Grid.Column computer={16} tablet={16} mobile={16}>
             <Segment inverted>
@@ -52,7 +50,7 @@ class Breweries extends React.Component {
                 as='h1'
                 textAlign='center'
                 style={styles.header}>
-                Breweries:
+                And Then The Breweries
               </Header>
               <Divider />
               <Card.Group stackable itemsPerRow={3}>
